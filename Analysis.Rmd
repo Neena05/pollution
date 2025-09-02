@@ -1,0 +1,55 @@
+---
+title: "Analysis"
+author: "Neena Varanasi"
+date: "2025-09-02"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE, echo=FALSE}
+library(tidyverse)
+```
+```{r, warning=FALSE}
+# read in the data
+dat <- read_csv("ny_pollution.csv.gz")
+```
+## Statement About the Data
+The date with the most pollution is 2002-07-07 with a pollution value of 92.4.
+
+```{r}
+dat %>%
+  slice_max(pollution, n = 1, with_ties = TRUE)
+
+```
+
+## Supporting Premise
+
+Scatter plot showing the maximum pollution value was in the middle of 2002.
+
+```{r, warning=FALSE}
+ggplot(dat, aes(x = date, y = pollution)) +
+  geom_point() +
+  theme_minimal()
+      
+```
+
+Line graph showing a maximum pollution in the middle of 2002.
+```{r}
+dat %>%
+  filter(!is.na(pollution)) %>%
+  ggplot(aes(x = date, y = pollution)) +
+  geom_line(color = "steelblue") +
+  theme_minimal()
+
+```
+
+## Analysis
+The output from the supporting premise allows us to visually see that the maximum pollution level from 1997-2005 in Detroit was in July 2002. 
+
+The two alternate views of the scatter plot and line plot confirm these findings. However, it is also important to note that the data set contained many NAs for pollution. Therefore, these supporting visuals only show the maximum pollution levels from the data given.
